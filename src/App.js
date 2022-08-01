@@ -39,14 +39,22 @@ const App = () => {
     const airlineId = event.target.value
 
     if (airlineId) {
-      setRoutes(data.routes.filter(route => route.airline === parseInt(airlineId, 10)))
+      setRoutes(routes.filter(route => route.airline === parseInt(airlineId, 10)))
     } else {
       setRoutes(data.routes)
     }
   }
 
-  const filteredAirlines = () => {
-    return data.airlines
+  const filterByAirport= event => {
+    const airlineCode = event.target.value
+
+    if (airlineCode) {
+      setRoutes(routes.filter(route => {
+        return route.src === airlineCode || route.dest === airlineCode
+      }))
+    } else {
+      setRoutes(data.routes)
+    }
   }
 
   return (
@@ -61,6 +69,11 @@ const App = () => {
             <label>
               Show Routes On: 
               <Select allTitle="All Airlines" valueKey="id" titleKey="name" onSelect={filterByAirline} options={data.airlines} />
+            </label>
+
+            <label>
+              Flying in and out of: 
+              <Select allTitle="All Airports" valueKey="code" titleKey="name" onSelect={filterByAirport} options={data.airports} />
             </label>
           </form>
         </section>
