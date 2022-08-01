@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import data from './data'
 import Table from './components/Table'
+import Select from './components/Select'
 
 const columns = [
   {name: 'Airline', property: 'airline'},
@@ -35,14 +36,17 @@ const App = () => {
   }
 
   const filterByAirline = event => {
-    const airlineName = event.target.value
+    const airlineId = event.target.value
 
-    if (airlineName) {
-      const airline = data.getAirlineByName(airlineName)
-      setRoutes(data.routes.filter(route => route.airline === airline.id))
+    if (airlineId) {
+      setRoutes(data.routes.filter(route => route.airline === parseInt(airlineId, 10)))
     } else {
       setRoutes(data.routes)
     }
+  }
+
+  const filteredAirlines = () => {
+    return data.airlines
   }
 
   return (
@@ -56,12 +60,7 @@ const App = () => {
           <form>
             <label>
               Show Routes On: 
-              <select onChange={filterByAirline}>
-                <option key="all" value="">All Airlines</option>
-                {data.airlines.map(airline => 
-                  <option key={airline.id} value={airline.name}>{airline.name}</option>  
-                )}
-              </select>
+              <Select allTitle="All Airlines" valueKey="id" titleKey="name" onSelect={filterByAirline} options={data.airlines} />
             </label>
           </form>
         </section>
