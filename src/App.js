@@ -8,7 +8,7 @@ const App = () => (
   </header>
   <section>
     <p>
-      Welcome to the app!
+      Welcome to Airlines App!
     </p>
   </section>
 </div>
