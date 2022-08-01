@@ -9,18 +9,13 @@ const App = () => (
     <h1 className="title">Airline Routes</h1>
   </header>
   <section>
-    <p>
-      Welcome to Airlines App!
-    </p>
-  </section>
-  <section>
     <Table striped>
       <tbody>
         {data.routes.map(route => 
           <tr>
-            <td>{route.airline}</td>
-            <td>{route.src}</td>
-            <td>{route.dest}</td>
+            <td>{data.getAirlineById(route.airline).name}</td>
+            <td>{data.getAirportByCode(route.src).name}</td>
+            <td>{data.getAirportByCode(route.dest).name}</td>
           </tr>
         )}
       </tbody>
