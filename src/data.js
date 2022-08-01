@@ -1399,8 +1399,12 @@ const getAirlineById = id => {
   return airlines.find(airline => airline.id === id);
 }
 
+const getAirlineByName = name => {
+  return airlines.find(airline => airline.name === name);
+}
+
 const getAirportByCode = code => {
   return airports.find(airport => airport.code === code);
 } 
 
-export default { routes, airlines, airports, getAirlineById, getAirportByCode };
+export default { routes, airlines, airports, getAirlineById, getAirlineByName, getAirportByCode };

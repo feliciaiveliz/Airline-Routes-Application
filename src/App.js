@@ -19,6 +19,7 @@ function formatValue(property, value) {
 
 const App = () => {
   const [firstRouteToShow, setFirstRouteToShow] = useState(0)
+  const [routes, setRoutes] = useState(data.routes)
   const PER_PAGE = 25;
 
   const previousRoutes = () => {  // 26 - 50 -> 1 - 25 
@@ -30,7 +31,18 @@ const App = () => {
   }
 
   const topOfRange = () => {
-    return firstRouteToShow + PER_PAGE <= data.routes.length ? firstRouteToShow + PER_PAGE : data.routes.length;
+    return firstRouteToShow + PER_PAGE <= routes.length ? firstRouteToShow + PER_PAGE : routes.length;
+  }
+
+  const filterByAirline = event => {
+    const airlineName = event.target.value
+
+    if (airlineName) {
+      const airline = data.getAirlineByName(airlineName)
+      setRoutes(data.routes.filter(route => route.airline === airline.id))
+    } else {
+      setRoutes(data.routes)
+    }
   }
 
   return (
@@ -39,13 +51,28 @@ const App = () => {
         <header className="header">
           <h1 className="title">Airline Routes</h1>
         </header>
+
         <section>
-          <Table className="routes-table" columns={columns} rows={data.routes} format={formatValue} perPage={PER_PAGE} firstRow={firstRouteToShow} />
+          <form>
+            <label>
+              Show Routes On: 
+              <select onChange={filterByAirline}>
+                <option key="all" value="">All Airlines</option>
+                {data.airlines.map(airline => 
+                  <option key={airline.id} value={airline.name}>{airline.name}</option>  
+                )}
+              </select>
+            </label>
+          </form>
         </section>
 
-        <p>{`Showing ${firstRouteToShow + 1} - ${topofRange()} of ${data.routes.length} routes`}</p>
+        <section>
+          <Table className="routes-table" columns={columns} rows={routes} format={formatValue} perPage={PER_PAGE} firstRow={firstRouteToShow} />
+        </section>
+
+        <p>{`Showing ${firstRouteToShow + 1} - ${topOfRange()} of ${routes.length} routes`}</p>
         <button disabled={firstRouteToShow === 0 ? true : false } onClick={previousRoutes}>Previous Page</button>
-        <button disabled={firstRouteToShow + PER_PAGE >= data.routes.length ? true : false} onClick={nextRoutes}>Next Page</button>
+        <button disabled={firstRouteToShow + PER_PAGE >= routes.length ? true : false} onClick={nextRoutes}>Next Page</button>
       </div>
     </>
   )
