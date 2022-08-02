@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const Table = ({ columns, rows, format, perPage, firstRow }) => {   
   return (
