@@ -3,6 +3,7 @@ import './App.css'
 import data from './data'
 import Table from './components/Table'
 import Select from './components/Select'
+import Map from './components/Map'
 
 const columns = [
   {name: 'Airline', property: 'airline'},
@@ -106,7 +107,6 @@ const App = () => {
     }))
   }, [routes])
 
-
   const previousRoutes = () => {  // 26 - 50 -> 1 - 25 
     setFirstRouteToShow(firstRouteToShow - PER_PAGE)
   }
@@ -142,6 +142,10 @@ const App = () => {
       <header className="header">
         <h1 className="title">Airline Routes</h1>
       </header>
+      
+      <section>
+        <Map routes={routes} format={data.getAirportByCode} /> 
+      </section>
 
       <section>
         <form id="form">
