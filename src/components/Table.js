@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Table = ({ columns, rows, format, perPage, firstRow }) => {   
+const Table = ({ columns, rows, format, perPage, firstRow }) => {   // routes
   return (
     <table>
      <thead>
